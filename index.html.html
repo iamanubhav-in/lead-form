@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Query Form</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap');
+
+  :root{
+    --ink:#12151c;
+    --panel:#1a1f2b;
+    --gold:#d9a441;
+    --gold-soft:#f0c878;
+    --cream:#f3efe6;
+    --muted:#8b93a5;
+    --line:#2b3140;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(217,164,65,0.10), transparent 45%),
+      radial-gradient(circle at 90% 100%, rgba(217,164,65,0.06), transparent 40%);
+    font-family:'Manrope', sans-serif;
+    color:var(--cream);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px 18px;
+  }
+  .card{
+    width:100%;
+    max-width:440px;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px;height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:34px;
+    line-height:1.15;
+    margin:0 0 8px;
+  }
+  .sub{
+    color:var(--muted);
+    font-size:14.5px;
+    line-height:1.5;
+    margin:0 0 30px;
+  }
+  form{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  label{
+    font-size:12px;
+    color:var(--muted);
+    letter-spacing:0.03em;
+    margin-bottom:6px;
+    display:block;
+  }
+  input, textarea{
+    width:100%;
+    background:var(--panel);
+    border:1px solid var(--line);
+    color:var(--cream);
+    padding:13px 14px;
+    border-radius:10px;
+    font-family:'Manrope', sans-serif;
+    font-size:15px;
+    outline:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  input:focus, textarea:focus{
+    border-color:var(--gold);
+    background:#1e2432;
+  }
+  textarea{resize:vertical; min-height:90px;}
+  button{
+    margin-top:6px;
+    background:var(--gold);
+    color:#1a1206;
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    font-family:'Manrope', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  button:hover{background:var(--gold-soft);}
+  button:active{transform:scale(0.98);}
+  button:disabled{opacity:0.6; cursor:default;}
+  .foot{
+    text-align:center;
+    margin-top:22px;
+    font-size:11px;
+    color:var(--muted);
+  }
+  .foot button{
+    background:none;
+    border:none;
+    color:var(--muted);
+    text-decoration:underline;
+    font-size:11px;
+    font-weight:400;
+    padding:0;
+    margin:0;
+  }
+  .foot button:hover{color:var(--gold-soft); background:none;}
+
+  /* success stamp */
+  .success{
+    display:none;
+    text-align:center;
+    padding:40px 10px;
+  }
+  .stamp{
+    width:64px;height:64px;
+    border:2px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+    font-size:28px;
+    color:var(--gold);
+  }
+  .success h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:24px;
+    margin:0 0 8px;
+  }
+  .success p{
+    color:var(--muted);
+    font-size:14px;
+    margin:0;
+  }
+
+  /* admin */
+  .admin-toggle{
+    position:fixed;
+    bottom:14px;
+    right:14px;
+    font-size:10px;
+    color:var(--line);
+    background:none;
+    border:none;
+    cursor:pointer;
+    opacity:0.5;
+  }
+  .lead-item{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .lead-item .name{font-weight:700; font-size:15px;}
+  .lead-item .meta{color:var(--gold); font-size:12.5px; margin:4px 0;}
+  .lead-item .msg{color:var(--muted); font-size:13.5px; line-height:1.5;}
+  .lead-item .time{color:var(--line); font-size:11px; margin-top:8px;}
+  .empty{color:var(--muted); font-size:13.5px; text-align:center; padding:30px 0;}
+</style>
+</head>
+<body>
+
+<div class="card" id="formCard">
+  <div class="eyebrow">Get in touch</div>
+  <h1>Have a query?</h1>
+  <p class="sub">Apni details fill karein — main jald hi aapse reply karunga.</p>
+
+  <form id="leadForm">
+    <div>
+      <label for="name">Naam</label>
+      <input type="text" id="name" required placeholder="Aapka naam">
+    </div>
+    <div>
+      <label for="contact">Phone ya Email</label>
+      <input type="text" id="contact" required placeholder="+91 ... ya email@example.com">
+    </div>
+    <div>
+      <label for="insta">Instagram ID (optional)</label>
+      <input type="text" id="insta" placeholder="@username">
+    </div>
+    <div>
+      <label for="query">Aapki query</label>
+      <textarea id="query" required placeholder="Yahan apni query likhein..."></textarea>
+    </div>
+    <button type="submit" id="submitBtn">Query Bhejein</button>
+  </form>
+
+  <div class="success" id="successMsg">
+    <div class="stamp">✓</div>
+    <h2>Bheja gaya!</h2>
+    <p>Aapki query mil gayi hai. Main jald hi contact karunga.</p>
+  </div>
+
+  <div class="foot"><button id="adminLink">admin</button></div>
+</div>
+
+<div class="card" id="adminCard" style="display:none; max-width:520px;">
+  <div class="eyebrow">Admin</div>
+  <h1 style="font-size:26px;">Sabhi Leads</h1>
+  <div id="leadsList"></div>
+  <div class="foot"><button id="backLink">← form par wapas jaayein</button></div>
+</div>
+
+<script>
+const formCard = document.getElementById('formCard');
+const adminCard = document.getElementById('adminCard');
+const leadForm = document.getElementById('leadForm');
+const successMsg = document.getElementById('successMsg');
+const submitBtn = document.getElementById('submitBtn');
+const leadsList = document.getElementById('leadsList');
+
+document.getElementById('adminLink').addEventListener('click', async () => {
+  const pass = prompt('Admin passcode daalein:');
+  if (pass !== 'mera2026') { alert('Galat passcode.'); return; }
+  formCard.style.display = 'none';
+  adminCard.style.display = 'block';
+  await loadLeads();
+});
+
+document.getElementById('backLink').addEventListener('click', () => {
+  adminCard.style.display = 'none';
+  formCard.style.display = 'block';
+});
+
+leadForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Bhej rahe hain...';
+
+  const lead = {
+    name: document.getElementById('name').value.trim(),
+    contact: document.getElementById('contact').value.trim(),
+    insta: document.getElementById('insta').value.trim(),
+    query: document.getElementById('query').value.trim(),
+    time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+  };
+
+  try {
+    const key = 'lead:' + Date.now() + ':' + Math.random().toString(36).slice(2, 8);
+    const result = await window.storage.set(key, JSON.stringify(lead), true);
+    if (!result) throw new Error('save failed');
+    leadForm.style.display = 'none';
+    successMsg.style.display = 'block';
+  } catch (err) {
+    alert('Kuch galat ho gaya, dobara try karein.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Query Bhejein';
+  }
+});
+
+async function loadLeads() {
+  leadsList.innerHTML = '<div class="empty">Load ho raha hai...</div>';
+  try {
+    const listResult = await window.storage.list('lead:', true);
+    const keys = (listResult && listResult.keys) ? listResult.keys : [];
+    if (keys.length === 0) {
+      leadsList.innerHTML = '<div class="empty">Abhi tak koi lead nahi aayi.</div>';
+      return;
+    }
+    const leads = [];
+    for (const k of keys) {
+      try {
+        const r = await window.storage.get(k, true);
+        if (r && r.value) leads.push(JSON.parse(r.value));
+      } catch (e) {}
+    }
+    leads.sort((a, b) => (b.time > a.time ? 1 : -1));
+    leadsList.innerHTML = leads.map(l => `
+      <div class="lead-item">
+        <div class="name">${escapeHtml(l.name)}</div>
+        <div class="meta">${escapeHtml(l.contact)}${l.insta ? ' · ' + escapeHtml(l.insta) : ''}</div>
+        <div class="msg">${escapeHtml(l.query)}</div>
+        <div class="time">${escapeHtml(l.time || '')}</div>
+      </div>
+    `).join('');
+  } catch (err) {
+    leadsList.innerHTML = '<div class="empty">Leads load nahi ho payi. Dobara try karein.</div>';
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+</script>
+
+</body>
+</html>
