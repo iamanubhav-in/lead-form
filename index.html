@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +32,6 @@
   }
   .wrap{ width:100%; max-width:460px; }
 
-  /* Header: diamond sun mark echoing the logo */
   .brand{
     display:flex;
     align-items:center;
@@ -134,6 +133,9 @@
     border-color:var(--green);
     background:#ffffff;
   }
+  .field{ transition: max-height .2s ease; }
+  .field.hidden{ display:none; }
+
   button{
     margin-top:8px;
     background:var(--green);
@@ -172,7 +174,6 @@
   }
   .foot button.admin-btn:hover{ color:var(--green-deep); }
 
-  /* success */
   .success{ display:none; text-align:center; padding:26px 6px 10px; }
   .stamp{
     width:60px; height:60px;
@@ -196,19 +197,6 @@
     margin:0;
   }
 
-  /* admin */
-  .lead-item{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:14px 16px;
-    margin-bottom:12px;
-    text-align:left;
-  }
-  .lead-item .name{font-weight:700; font-size:15px;}
-  .lead-item .meta{color:var(--green-deep); font-size:12.5px; margin:4px 0;}
-  .lead-item .row{color:var(--muted); font-size:13px; line-height:1.6;}
-  .lead-item .time{color:#b7c2bc; font-size:11px; margin-top:8px;}
   .empty{color:var(--muted); font-size:13.5px; text-align:center; padding:24px 0;}
 </style>
 </head>
@@ -222,13 +210,13 @@
   </div>
 
   <div class="card" id="formCard">
-    <p class="headline">Get a free solar quote</p>
-    <p class="sub">Apni details bharein — hamari expert team aapse jald hi connect karegi.</p>
+    <p class="headline">Get a Free Solar Quote</p>
+    <p class="sub">Fill in your details below and our expert team will get in touch with you shortly.</p>
 
     <form id="leadForm">
       <div>
-        <label for="name">Naam</label>
-        <input type="text" id="name" required placeholder="Aapka naam">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required placeholder="Your name">
       </div>
       <div>
         <label for="number">Phone Number</label>
@@ -236,12 +224,12 @@
       </div>
       <div>
         <label for="city">City</label>
-        <input type="text" id="city" required placeholder="Aapka shehar">
+        <input type="text" id="city" required placeholder="Your city">
       </div>
       <div>
         <label for="plantType">Plant Type</label>
         <select id="plantType" required>
-          <option value="" disabled selected>Select karein</option>
+          <option value="" disabled selected>Select an option</option>
           <option value="Residential">Residential</option>
           <option value="Commercial">Commercial</option>
         </select>
@@ -249,7 +237,7 @@
       <div>
         <label for="plantSize">Plant Size</label>
         <select id="plantSize" required>
-          <option value="" disabled selected>Select karein</option>
+          <option value="" disabled selected>Select an option</option>
           <option value="1 kW – 3 kW">1 kW – 3 kW</option>
           <option value="3 kW – 5 kW">3 kW – 5 kW</option>
           <option value="5 kW – 10 kW">5 kW – 10 kW</option>
@@ -259,6 +247,33 @@
           <option value="Not sure yet">Not sure yet</option>
         </select>
       </div>
+
+      <div>
+        <label for="source">Where did you get this link?</label>
+        <select id="source" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="Instagram">Instagram</option>
+          <option value="WhatsApp">WhatsApp</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="field hidden" id="employeeField">
+        <label for="employee">Referred By (Employee)</label>
+        <select id="employee">
+          <option value="" disabled selected>Select an option</option>
+          <option value="Manish Singh">Manish Singh</option>
+          <option value="Harshit Pandey">Harshit Pandey</option>
+          <option value="Vivek Kumar">Vivek Kumar</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="field hidden" id="employeeOtherField">
+        <label for="employeeOther">Employee Name</label>
+        <input type="text" id="employeeOther" placeholder="Enter employee name">
+      </div>
+
       <button type="submit" id="submitBtn">Submit Query</button>
     </form>
 
@@ -274,12 +289,11 @@
   <div class="card" id="adminCard" style="display:none;">
     <p class="headline">All Leads</p>
     <div id="leadsList"></div>
-    <div class="foot"><button class="admin-btn" id="backLink">← form par wapas jaayein</button></div>
+    <div class="foot"><button class="admin-btn" id="backLink">← Back to form</button></div>
   </div>
 </div>
 
 <script>
-// ⚠️ Replace this with your Google Apps Script Web App URL once deployed
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyv7zD-H8NXiIgY3XMSuJ0TAfrPXNtkriP0-MHAh9UapYZSf5tnYqHg9UBSxEWNNxs4bg/exec";
 
 const formCard = document.getElementById('formCard');
@@ -289,9 +303,40 @@ const successMsg = document.getElementById('successMsg');
 const submitBtn = document.getElementById('submitBtn');
 const leadsList = document.getElementById('leadsList');
 
+const sourceSelect = document.getElementById('source');
+const employeeField = document.getElementById('employeeField');
+const employeeSelect = document.getElementById('employee');
+const employeeOtherField = document.getElementById('employeeOtherField');
+const employeeOtherInput = document.getElementById('employeeOther');
+
+sourceSelect.addEventListener('change', () => {
+  if (sourceSelect.value === 'Other') {
+    employeeField.classList.remove('hidden');
+    employeeSelect.required = true;
+  } else {
+    employeeField.classList.add('hidden');
+    employeeOtherField.classList.add('hidden');
+    employeeSelect.required = false;
+    employeeSelect.value = '';
+    employeeOtherInput.required = false;
+    employeeOtherInput.value = '';
+  }
+});
+
+employeeSelect.addEventListener('change', () => {
+  if (employeeSelect.value === 'Other') {
+    employeeOtherField.classList.remove('hidden');
+    employeeOtherInput.required = true;
+  } else {
+    employeeOtherField.classList.add('hidden');
+    employeeOtherInput.required = false;
+    employeeOtherInput.value = '';
+  }
+});
+
 document.getElementById('adminLink').addEventListener('click', async () => {
-  const pass = prompt('Admin passcode daalein:');
-  if (pass !== 'mera2026') { alert('Galat passcode.'); return; }
+  const pass = prompt('Enter admin passcode:');
+  if (pass !== 'mera2026') { alert('Incorrect passcode.'); return; }
   formCard.style.display = 'none';
   adminCard.style.display = 'block';
   await loadLeads();
@@ -307,20 +352,30 @@ leadForm.addEventListener('submit', async (e) => {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Sending...';
 
+  let employeeName = '';
+  if (sourceSelect.value === 'Other') {
+    employeeName = employeeSelect.value === 'Other' ? employeeOtherInput.value.trim() : employeeSelect.value;
+  }
+
   const lead = {
     name: document.getElementById('name').value.trim(),
     contact: document.getElementById('number').value.trim(),
     city: document.getElementById('city').value.trim(),
     plantType: document.getElementById('plantType').value,
-    plantSize: document.getElementById('plantSize').value
+    plantSize: document.getElementById('plantSize').value,
+    source: sourceSelect.value,
+    employee: employeeName
   };
 
   try {
     const params = new URLSearchParams();
     params.append('name', lead.name);
     params.append('contact', lead.contact);
-    params.append('insta', lead.city + ' | ' + lead.plantType);
-    params.append('query', 'Plant size: ' + lead.plantSize);
+    params.append('city', lead.city);
+    params.append('plantType', lead.plantType);
+    params.append('plantSize', lead.plantSize);
+    params.append('source', lead.source);
+    params.append('employee', lead.employee);
 
     await fetch(SCRIPT_URL, {
       method: 'POST',
@@ -332,14 +387,14 @@ leadForm.addEventListener('submit', async (e) => {
     leadForm.style.display = 'none';
     successMsg.style.display = 'block';
   } catch (err) {
-    alert('Kuch galat ho gaya, dobara try karein.');
+    alert('Something went wrong. Please try again.');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit Query';
   }
 });
 
 async function loadLeads() {
-  leadsList.innerHTML = '<div class="empty">Leads dekhne ke liye apni Google Sheet kholein — sabhi entries wahan seedha aati hain.</div>';
+  leadsList.innerHTML = '<div class="empty">All submitted leads appear directly in your connected Google Sheet.</div>';
 }
 </script>
 
