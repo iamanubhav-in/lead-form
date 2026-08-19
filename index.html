@@ -334,17 +334,10 @@ employeeSelect.addEventListener('change', () => {
   }
 });
 
-document.getElementById('adminLink').addEventListener('click', async () => {
+document.getElementById('adminLink').addEventListener('click', () => {
   const pass = prompt('Enter admin passcode:');
-  if (pass !== 'mera2026') { alert('Incorrect passcode.'); return; }
-  formCard.style.display = 'none';
-  adminCard.style.display = 'block';
-  await loadLeads();
-});
-
-document.getElementById('backLink').addEventListener('click', () => {
-  adminCard.style.display = 'none';
-  formCard.style.display = 'block';
+  if (pass !== 'anubhav25') { alert('Incorrect passcode.'); return; }
+  window.open('https://docs.google.com/spreadsheets/d/1xPhwAEkAvIjrJtufD9C9oxryutSoD1vv93ineKvWF6M/edit?usp=sharing', '_blank');
 });
 
 leadForm.addEventListener('submit', async (e) => {
