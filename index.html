@@ -3,120 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Query Form</title>
+<title>Econest Solar — Get a Quote</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
   :root{
-    --ink:#12151c;
-    --panel:#1a1f2b;
-    --gold:#d9a441;
-    --gold-soft:#f0c878;
-    --cream:#f3efe6;
-    --muted:#8b93a5;
-    --line:#2b3140;
+    --green-deep:#0f6b4a;
+    --green:#189766;
+    --green-bright:#1cb377;
+    --ink:#14201b;
+    --paper:#f6f8f6;
+    --card:#ffffff;
+    --line:#e1e8e3;
+    --muted:#6b7a72;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:var(--ink);
-    background-image:
-      radial-gradient(circle at 15% 0%, rgba(217,164,65,0.10), transparent 45%),
-      radial-gradient(circle at 90% 100%, rgba(217,164,65,0.06), transparent 40%);
-    font-family:'Manrope', sans-serif;
-    color:var(--cream);
+    background:var(--paper);
+    background-image: radial-gradient(circle at 100% 0%, rgba(28,179,119,0.08), transparent 45%);
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
     min-height:100vh;
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:28px 18px;
+    padding:24px 16px;
   }
-  .card{
-    width:100%;
-    max-width:440px;
-  }
-  .eyebrow{
-    font-size:12px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin-bottom:10px;
+  .wrap{ width:100%; max-width:460px; }
+
+  /* Header: diamond sun mark echoing the logo */
+  .brand{
     display:flex;
     align-items:center;
-    gap:8px;
+    justify-content:center;
+    flex-direction:column;
+    margin-bottom:26px;
   }
-  .eyebrow::before{
+  .mark{
+    width:56px; height:56px;
+    position:relative;
+    margin-bottom:14px;
+    transform:rotate(45deg);
+    border:3px solid var(--green);
+    border-radius:8px;
+  }
+  .mark::before{
     content:"";
-    width:18px;height:1px;
-    background:var(--gold);
-    display:inline-block;
+    position:absolute;
+    inset:7px;
+    border:2px solid var(--green-bright);
+    border-radius:6px;
   }
-  h1{
-    font-family:'Fraunces', serif;
+  .mark::after{
+    content:"";
+    position:absolute;
+    top:50%; left:50%;
+    width:10px; height:10px;
+    background:var(--green);
+    border-radius:50%;
+    transform:translate(-50%,-50%) rotate(-45deg);
+  }
+  .brand h1{
+    font-family:'Poppins', sans-serif;
+    font-weight:800;
+    letter-spacing:0.04em;
+    font-size:26px;
+    margin:0;
+    color:var(--ink);
+  }
+  .brand .tag{
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--green-deep);
     font-weight:600;
-    font-size:34px;
-    line-height:1.15;
-    margin:0 0 8px;
+    margin-top:4px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 26px 28px;
+    box-shadow:0 20px 50px -25px rgba(15,107,74,0.35);
+  }
+  .headline{
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:20px;
+    margin:0 0 6px;
   }
   .sub{
     color:var(--muted);
-    font-size:14.5px;
+    font-size:13.5px;
     line-height:1.5;
-    margin:0 0 30px;
+    margin:0 0 24px;
   }
-  form{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-  }
+
+  form{ display:flex; flex-direction:column; gap:16px; }
   label{
     font-size:12px;
-    color:var(--muted);
-    letter-spacing:0.03em;
+    font-weight:600;
+    color:var(--green-deep);
+    letter-spacing:0.02em;
     margin-bottom:6px;
     display:block;
   }
-  input, textarea{
+  input, select{
     width:100%;
-    background:var(--panel);
-    border:1px solid var(--line);
-    color:var(--cream);
-    padding:13px 14px;
+    background:var(--paper);
+    border:1.5px solid var(--line);
+    color:var(--ink);
+    padding:12.5px 14px;
     border-radius:10px;
-    font-family:'Manrope', sans-serif;
+    font-family:'Inter', sans-serif;
     font-size:15px;
     outline:none;
     transition:border-color .15s ease, background .15s ease;
+    appearance:none;
+    -webkit-appearance:none;
   }
-  input:focus, textarea:focus{
-    border-color:var(--gold);
-    background:#1e2432;
+  select{
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23189766' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    padding-right:36px;
   }
-  textarea{resize:vertical; min-height:90px;}
+  input:focus, select:focus{
+    border-color:var(--green);
+    background:#ffffff;
+  }
   button{
-    margin-top:6px;
-    background:var(--gold);
-    color:#1a1206;
+    margin-top:8px;
+    background:var(--green);
+    background-image:linear-gradient(135deg, var(--green-bright), var(--green-deep));
+    color:#fff;
     border:none;
-    padding:14px;
+    padding:15px;
     border-radius:10px;
-    font-family:'Manrope', sans-serif;
+    font-family:'Poppins', sans-serif;
     font-weight:700;
     font-size:15px;
+    letter-spacing:0.02em;
     cursor:pointer;
-    transition:background .15s ease, transform .1s ease;
+    transition:transform .1s ease, box-shadow .15s ease;
+    box-shadow:0 10px 24px -10px rgba(15,107,74,0.6);
   }
-  button:hover{background:var(--gold-soft);}
-  button:active{transform:scale(0.98);}
-  button:disabled{opacity:0.6; cursor:default;}
+  button:hover{ box-shadow:0 14px 28px -10px rgba(15,107,74,0.7); }
+  button:active{ transform:scale(0.98); }
+  button:disabled{ opacity:0.6; cursor:default; }
+
   .foot{
     text-align:center;
-    margin-top:22px;
+    margin-top:20px;
     font-size:11px;
     color:var(--muted);
   }
-  .foot button{
-    background:none;
+  .foot button.admin-btn{
+    background:none; box-shadow:none;
     border:none;
     color:var(--muted);
     text-decoration:underline;
@@ -125,107 +170,118 @@
     padding:0;
     margin:0;
   }
-  .foot button:hover{color:var(--gold-soft); background:none;}
+  .foot button.admin-btn:hover{ color:var(--green-deep); }
 
-  /* success stamp */
-  .success{
-    display:none;
-    text-align:center;
-    padding:40px 10px;
-  }
+  /* success */
+  .success{ display:none; text-align:center; padding:26px 6px 10px; }
   .stamp{
-    width:64px;height:64px;
-    border:2px solid var(--gold);
+    width:60px; height:60px;
+    margin:0 auto 18px;
     border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0 auto 20px;
-    font-size:28px;
-    color:var(--gold);
+    background:linear-gradient(135deg, var(--green-bright), var(--green-deep));
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:26px;
+    box-shadow:0 12px 24px -8px rgba(15,107,74,0.5);
   }
   .success h2{
-    font-family:'Fraunces', serif;
-    font-weight:600;
-    font-size:24px;
-    margin:0 0 8px;
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:19px;
+    margin:0 0 10px;
   }
   .success p{
     color:var(--muted);
     font-size:14px;
+    line-height:1.6;
     margin:0;
   }
 
   /* admin */
-  .admin-toggle{
-    position:fixed;
-    bottom:14px;
-    right:14px;
-    font-size:10px;
-    color:var(--line);
-    background:none;
-    border:none;
-    cursor:pointer;
-    opacity:0.5;
-  }
   .lead-item{
-    background:var(--panel);
+    background:var(--paper);
     border:1px solid var(--line);
     border-radius:10px;
     padding:14px 16px;
     margin-bottom:12px;
+    text-align:left;
   }
   .lead-item .name{font-weight:700; font-size:15px;}
-  .lead-item .meta{color:var(--gold); font-size:12.5px; margin:4px 0;}
-  .lead-item .msg{color:var(--muted); font-size:13.5px; line-height:1.5;}
-  .lead-item .time{color:var(--line); font-size:11px; margin-top:8px;}
-  .empty{color:var(--muted); font-size:13.5px; text-align:center; padding:30px 0;}
+  .lead-item .meta{color:var(--green-deep); font-size:12.5px; margin:4px 0;}
+  .lead-item .row{color:var(--muted); font-size:13px; line-height:1.6;}
+  .lead-item .time{color:#b7c2bc; font-size:11px; margin-top:8px;}
+  .empty{color:var(--muted); font-size:13.5px; text-align:center; padding:24px 0;}
 </style>
 </head>
 <body>
 
-<div class="card" id="formCard">
-  <div class="eyebrow">Get in touch</div>
-  <h1>Have a query?</h1>
-  <p class="sub">Apni details fill karein — main jald hi aapse reply karunga.</p>
-
-  <form id="leadForm">
-    <div>
-      <label for="name">Naam</label>
-      <input type="text" id="name" required placeholder="Aapka naam">
-    </div>
-    <div>
-      <label for="contact">Phone ya Email</label>
-      <input type="text" id="contact" required placeholder="+91 ... ya email@example.com">
-    </div>
-    <div>
-      <label for="insta">Instagram ID (optional)</label>
-      <input type="text" id="insta" placeholder="@username">
-    </div>
-    <div>
-      <label for="query">Aapki query</label>
-      <textarea id="query" required placeholder="Yahan apni query likhein..."></textarea>
-    </div>
-    <button type="submit" id="submitBtn">Query Bhejein</button>
-  </form>
-
-  <div class="success" id="successMsg">
-    <div class="stamp">✓</div>
-    <h2>Bheja gaya!</h2>
-    <p>Aapki query mil gayi hai. Main jald hi contact karunga.</p>
+<div class="wrap">
+  <div class="brand">
+    <div class="mark"></div>
+    <h1>ECONEST</h1>
+    <div class="tag">Solar Energy Pvt. Ltd.</div>
   </div>
 
-  <div class="foot"><button id="adminLink">admin</button></div>
-</div>
+  <div class="card" id="formCard">
+    <p class="headline">Get a free solar quote</p>
+    <p class="sub">Apni details bharein — hamari expert team aapse jald hi connect karegi.</p>
 
-<div class="card" id="adminCard" style="display:none; max-width:520px;">
-  <div class="eyebrow">Admin</div>
-  <h1 style="font-size:26px;">Sabhi Leads</h1>
-  <div id="leadsList"></div>
-  <div class="foot"><button id="backLink">← form par wapas jaayein</button></div>
+    <form id="leadForm">
+      <div>
+        <label for="name">Naam</label>
+        <input type="text" id="name" required placeholder="Aapka naam">
+      </div>
+      <div>
+        <label for="number">Phone Number</label>
+        <input type="tel" id="number" required placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div>
+        <label for="city">City</label>
+        <input type="text" id="city" required placeholder="Aapka shehar">
+      </div>
+      <div>
+        <label for="plantType">Plant Type</label>
+        <select id="plantType" required>
+          <option value="" disabled selected>Select karein</option>
+          <option value="Residential">Residential</option>
+          <option value="Commercial">Commercial</option>
+        </select>
+      </div>
+      <div>
+        <label for="plantSize">Plant Size</label>
+        <select id="plantSize" required>
+          <option value="" disabled selected>Select karein</option>
+          <option value="1 kW – 3 kW">1 kW – 3 kW</option>
+          <option value="3 kW – 5 kW">3 kW – 5 kW</option>
+          <option value="5 kW – 10 kW">5 kW – 10 kW</option>
+          <option value="10 kW – 25 kW">10 kW – 25 kW</option>
+          <option value="25 kW – 100 kW">25 kW – 100 kW</option>
+          <option value="100 kW+">100 kW+</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+      <button type="submit" id="submitBtn">Submit Query</button>
+    </form>
+
+    <div class="success" id="successMsg">
+      <div class="stamp">✓</div>
+      <h2>Thank you!</h2>
+      <p>Our expert team will connect with you shortly.</p>
+    </div>
+
+    <div class="foot"><button class="admin-btn" id="adminLink">admin</button></div>
+  </div>
+
+  <div class="card" id="adminCard" style="display:none;">
+    <p class="headline">All Leads</p>
+    <div id="leadsList"></div>
+    <div class="foot"><button class="admin-btn" id="backLink">← form par wapas jaayein</button></div>
+  </div>
 </div>
 
 <script>
+// ⚠️ Replace this with your Google Apps Script Web App URL once deployed
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyv7zD-H8NXiIgY3XMSuJ0TAfrPXNtkriP0-MHAh9UapYZSf5tnYqHg9UBSxEWNNxs4bg/exec";
+
 const formCard = document.getElementById('formCard');
 const adminCard = document.getElementById('adminCard');
 const leadForm = document.getElementById('leadForm');
@@ -249,63 +305,41 @@ document.getElementById('backLink').addEventListener('click', () => {
 leadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Bhej rahe hain...';
+  submitBtn.textContent = 'Sending...';
 
   const lead = {
     name: document.getElementById('name').value.trim(),
-    contact: document.getElementById('contact').value.trim(),
-    insta: document.getElementById('insta').value.trim(),
-    query: document.getElementById('query').value.trim(),
-    time: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
+    contact: document.getElementById('number').value.trim(),
+    city: document.getElementById('city').value.trim(),
+    plantType: document.getElementById('plantType').value,
+    plantSize: document.getElementById('plantSize').value
   };
 
   try {
-    const key = 'lead:' + Date.now() + ':' + Math.random().toString(36).slice(2, 8);
-    const result = await window.storage.set(key, JSON.stringify(lead), true);
-    if (!result) throw new Error('save failed');
+    const params = new URLSearchParams();
+    params.append('name', lead.name);
+    params.append('contact', lead.contact);
+    params.append('insta', lead.city + ' | ' + lead.plantType);
+    params.append('query', 'Plant size: ' + lead.plantSize);
+
+    await fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+
     leadForm.style.display = 'none';
     successMsg.style.display = 'block';
   } catch (err) {
     alert('Kuch galat ho gaya, dobara try karein.');
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Query Bhejein';
+    submitBtn.textContent = 'Submit Query';
   }
 });
 
 async function loadLeads() {
-  leadsList.innerHTML = '<div class="empty">Load ho raha hai...</div>';
-  try {
-    const listResult = await window.storage.list('lead:', true);
-    const keys = (listResult && listResult.keys) ? listResult.keys : [];
-    if (keys.length === 0) {
-      leadsList.innerHTML = '<div class="empty">Abhi tak koi lead nahi aayi.</div>';
-      return;
-    }
-    const leads = [];
-    for (const k of keys) {
-      try {
-        const r = await window.storage.get(k, true);
-        if (r && r.value) leads.push(JSON.parse(r.value));
-      } catch (e) {}
-    }
-    leads.sort((a, b) => (b.time > a.time ? 1 : -1));
-    leadsList.innerHTML = leads.map(l => `
-      <div class="lead-item">
-        <div class="name">${escapeHtml(l.name)}</div>
-        <div class="meta">${escapeHtml(l.contact)}${l.insta ? ' · ' + escapeHtml(l.insta) : ''}</div>
-        <div class="msg">${escapeHtml(l.query)}</div>
-        <div class="time">${escapeHtml(l.time || '')}</div>
-      </div>
-    `).join('');
-  } catch (err) {
-    leadsList.innerHTML = '<div class="empty">Leads load nahi ho payi. Dobara try karein.</div>';
-  }
-}
-
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
+  leadsList.innerHTML = '<div class="empty">Leads dekhne ke liye apni Google Sheet kholein — sabhi entries wahan seedha aati hain.</div>';
 }
 </script>
 
